@@ -1,0 +1,56 @@
+schema_version: 1
+
+context:
+  version: 1.5.8
+
+package:
+  name: pypmml
+  version: ${{ version }}
+
+source:
+- url: https://github.com/autodeployai/pypmml/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 51383942565256676dae12be7c1ccd66de60e69c5c7b37c612583863f750ecbc
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+    - openjdk >=11
+    - py4j >=0.10.7
+    - jpype1
+
+tests:
+  - python:
+      imports:
+        - pypmml
+        - pypmml.jars
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - '*'
+  - script:
+      - pytest -vvv pypmml/test
+    requirements:
+      run:
+        - pytest
+    files:
+      source:
+        - pypmml/test
+
+about:
+  summary: Python PMML scoring library
+  license: Apache-2.0
+  license_file: LICENSE.txt
+  homepage: https://github.com/autodeployai/pypmml
+
+extra:
+  recipe-maintainers:
+    - maxibor
