@@ -17,11 +17,11 @@ build:
 
 requirements:
   host:
-    - pip
+    - python {{ python_min }}
     - python >=3.5
     - openjdk >=11
   run:
-    - python >=3.5
+    - python >={{ python_min }}
     - openjdk >=11
     - py4j >=0.10.7
     
@@ -34,6 +34,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/autodeployai/pypmml

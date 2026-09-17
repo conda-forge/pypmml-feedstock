@@ -9,3 +9,5 @@ docker_image:
 zip_keys:
 - - cdt_name
   - docker_image
+python_min:
+- '3.11'
